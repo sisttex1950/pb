@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Курс ПриватБанка из гривен</h1>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Валюта</th>
+        <th scope="col">Покупка</th>
+        <th scope="col">Продажа</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td id="valUSD"></td>
+        <td id="buyUSD"></td>
+        <td id="saleUSD"></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td id="valEUR"></td>
+        <td id="buyEUR"></td>
+        <td id="saleEUR"></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td id="valRUR"></td>
+        <td id="buyRUR"></td>
+        <td id="saleRUR"></td>
+      </tr>
+    </tbody>
+  </table>
+  <script type="text/javascript">
+  let request;
+  if(window.XMLHttpRequest){
+    request = new XMLHttpRequest();
+  }
+  else{
+    request = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  request.open("GET", "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5");
+  request.onload = function(){
+    if(request.status === 200){
+      // alert(request.response);
+      allResponse = JSON.parse(request.response);
+      document.getElementById('valUSD').innerText = allResponse[0].ccy;
+      document.getElementById('buyUSD').innerText = allResponse[0].buy;
+      document.getElementById('saleUSD').innerText = allResponse[0].sale;
+
+      document.getElementById('valEUR').innerText = allResponse[1].ccy;
+      document.getElementById('buyEUR').innerText = allResponse[1].buy;
+      document.getElementById('saleEUR').innerText = allResponse[1].sale;
+
+      document.getElementById('valRUR').innerText = allResponse[2].ccy;
+      document.getElementById('buyRUR').innerText = allResponse[2].buy;
+      document.getElementById('saleRUR').innerText = allResponse[2].sale;
+
+    }
+  }
+  request.send();
+  </script>
+</body>
+</html>
